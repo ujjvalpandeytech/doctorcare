@@ -72,7 +72,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="w-14 h-14 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-bold">
             {user?.profileImage ? (
               <img
-                src={`http://localhost:5000${user.profileImage}`}
+                src={user.profileImage}
                 alt={user.name || "Profile"}
                 className="w-full h-full object-cover"
               />

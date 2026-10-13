@@ -118,9 +118,7 @@ const Profile = () => {
 }
 };
 
-  const imageUrl = user?.profileImage
-    ? `http://localhost:5000${user.profileImage}`
-    : null;
+  const imageUrl = user?.profileImage || null;
 
   if (loading) {
     return (

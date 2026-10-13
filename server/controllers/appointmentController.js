@@ -1,5 +1,8 @@
 const Appointment = require("../models/Appointment");
 const Doctor = require("../models/Doctor");
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs/promises");
+
 
 const convertToMinutes = (time) => {
   const match = time.trim().match(
@@ -166,10 +169,22 @@ if (
       });
     }
 
-    // Medical report path
-    const report = req.file
-      ? `/uploads/reports/${req.file.filename}`
-      : "";
+    
+    // Medical report upload
+let report = "";
+
+if (req.file) {
+  const result = await cloudinary.uploader.upload(req.file.path, {
+    folder: "doctorcare/reports",
+    resource_type: "raw",
+  });
+
+  report = result.secure_url;
+
+  // Delete temporary file after Cloudinary upload
+  await fs.unlink(req.file.path).catch(() => {});
+}
+
 
     // Create appointment
     const appointment = await Appointment.create({
@@ -245,13 +260,17 @@ const getMyAppointments = async (req, res) => {
       appointments,
     });
   } catch (error) {
-    console.error("Get appointments error:", error);
+  console.error("Create appointment error:", error);
 
-    res.status(500).json({
-      success: false,
-      message: "Server error while fetching appointments",
-    });
+  if (req.file?.path) {
+    await fs.unlink(req.file.path).catch(() => {});
   }
+
+  res.status(500).json({
+    success: false,
+    message: "Server error while creating appointment",
+  });
+}
 };
 
 // Cancel appointment

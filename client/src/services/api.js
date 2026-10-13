@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://doctorcare-mtdf.onrender.com/api",
 });
 
 api.interceptors.request.use(
@@ -12,8 +12,6 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Let the browser/Axios automatically set
-    // multipart/form-data boundary for FormData
     if (config.data instanceof FormData) {
       delete config.headers["Content-Type"];
     } else {

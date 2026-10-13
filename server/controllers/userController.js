@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const cloudinary = require("../config/cloudinary");
+const fs = require("fs/promises");
 
 // GET logged-in user's profile
 const getProfile = async (req, res) => {
@@ -104,7 +106,17 @@ const uploadProfileImage = async (req, res) => {
       });
     }
 
-    user.profileImage = `/uploads/${req.file.filename}`;
+    // Upload temporary file to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "doctorcare/profile-images",
+      resource_type: "image",
+    });
+
+    // Delete temporary file from server
+    await fs.unlink(req.file.path).catch(() => {});
+
+    // Save Cloudinary URL in MongoDB
+    user.profileImage = result.secure_url;
 
     await user.save();
 
@@ -116,6 +128,11 @@ const uploadProfileImage = async (req, res) => {
   } catch (error) {
     console.error("Upload profile image error:", error);
 
+    // Delete temporary file if it still exists
+    if (req.file?.path) {
+      await fs.unlink(req.file.path).catch(() => {});
+    }
+
     res.status(500).json({
       success: false,
       message: "Server error while uploading profile picture",
@@ -123,6 +140,7 @@ const uploadProfileImage = async (req, res) => {
   }
 };
 
+   
 module.exports = {
   getProfile,
   updateProfile,

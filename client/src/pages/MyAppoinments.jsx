@@ -257,7 +257,7 @@ const MyAppointments = () => {
                     <p className="text-sm text-gray-500 mb-3">Medical Report</p>
 
                     <a
-                      href={`http://localhost:5000${appointment.report}`}
+                      href={appointment.report}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-lg font-medium transition"
