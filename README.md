@@ -216,8 +216,7 @@ doctor-appointment/
 - Medical reports
 ## 🧪 Testing
 - The project includes testing using Vitest and React Testing Library.
-- 
-###29/29 tests passed successfully.
+### 29/29 tests passed successfully.
 ## 🌐 Deployment
 - Frontend: Vercel
 - Backend: Render
