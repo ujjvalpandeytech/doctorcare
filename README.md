@@ -95,6 +95,52 @@ Cloudinary is used for storing:
 
 ---
 
+## 🔗 API Endpoints
+
+### Authentication
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/auth/register | Register a new patient |
+| POST | /api/auth/login | Login user and generate JWT token |
+| GET | /api/auth/me | Get currently authenticated user |
+
+### Users / Profile
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/users/profile | Get patient profile |
+| PUT | /api/users/profile | Update patient profile |
+| POST | /api/users/profile/image | Upload profile picture |
+
+### Doctors
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/doctors | Get all active doctors |
+| GET | /api/doctors/:id | Get doctor by ID |
+
+### Appointments
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/appointments | Book a new appointment |
+| GET | /api/appointments | Get logged-in patient's appointments |
+| PUT | /api/appointments/:id/cancel | Cancel an appointment |
+
+### Services
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /api/services | Get hospital services |
+
+### API Authentication
+
+Protected endpoints require a JWT token in the request header:
+
+`http
+Authorization: Bearer <your_jwt_token>
+
 ## 🛠️ Technologies Used
 
 ### Frontend
