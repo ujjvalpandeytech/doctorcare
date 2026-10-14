@@ -171,7 +171,75 @@ Cloudinary is used for storing:
        │ Services       │             └────────────────┘
        └────────────────┘
 
-       ###👨‍💻 Author
-      Ujjval Pandey
-      MSc Computer Science Student
-      MERN Stack Developer
+
+## 📁 Project Structure
+
+`text
+doctor-appointment/
+├── client/
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── redux/
+│       ├── routes/
+│       ├── services/
+│       └── utils/
+│
+└── server/
+    ├── config/
+    ├── controllers/
+    ├── middleware/
+    ├── models/
+    ├── routes/
+    ├── uploads/
+    └── server.js
+
+## 🔐 Authentication
+- User registration with validation
+- Secure password hashing
+- JWT-based authentication
+- Protected routes
+- Session verification
+- Logout functionality
+## 📅 Appointment System
+- Patients can:
+- Select a doctor
+- Choose appointment date and time
+- Select doctor type
+- Add comments
+- Upload medical reports
+- View appointments
+- Cancel appointments
+## ☁️ Cloudinary
+- Cloudinary is used to store:
+- Profile pictures
+- Medical reports
+## 🧪 Testing
+- The project includes testing using Vitest and React Testing Library.
+- 
+###29/29 tests passed successfully.
+## 🌐 Deployment
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
+- File Storage: Cloudinary
+## ▶️ Run Locally
+### Clone the repository
+- git clone <your-repository-url>
+- cd doctor-appointment
+### Frontend
+- cd client
+- npm install
+- npm run dev
+### Backend
+- Open another terminal:
+- cd server
+- npm install
+- npm run dev
+- Create a .env file inside the server folder and add your MongoDB, JWT, and Cloudinary credentials.
+    
+
+## 👨‍💻 Author
+   -- Ujjval Pandey
+   -- MSc Computer Science Student
+   -- MERN Stack Developer
