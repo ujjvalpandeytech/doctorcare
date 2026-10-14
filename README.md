@@ -225,7 +225,7 @@ doctor-appointment/
 - File Storage: Cloudinary
 ## ▶️ Run Locally
 ### Clone the repository
-- git clone <your-repository-url>
+- git clone https://github.com/ujjvalpandeytech/doctorcare.git
 - cd doctor-appointment
 ### Frontend
 - cd client
