@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
     const { name, email, phone, password } = req.body;
 
     // Check required fields
-    if (!name  || email || !phone || !password) {
+    if (!name  || !email || !phone || !password) {
       return res.status(400).json({
         success: false,
         message: "Please provide name, email, phone and password",
