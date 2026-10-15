@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import DashboardLayout from "../components/DashboardLayout"
-import { updateProfileImage } from "../redux/slices/authSlice";
+import { updateProfileImage} from "../redux/slices/authSlice";
 
 import {
   getProfile,
@@ -13,6 +13,7 @@ import {
   uploadProfileImage,
   clearProfileMessages,
 } from "../redux/slices/profileSlice";
+
 
 const Profile = () => {
   const dispatch = useDispatch();

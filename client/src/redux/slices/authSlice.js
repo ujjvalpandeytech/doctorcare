@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
-
 // ==========================
 // REGISTER
 // ==========================
@@ -15,12 +14,11 @@ export const registerUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Registration failed"
+        error.response?.data?.message || "Registration failed",
       );
     }
-  }
+  },
 );
-
 
 // ==========================
 // LOGIN
@@ -42,12 +40,14 @@ export const loginUser = createAsyncThunk(
         user,
       };
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.message || "Login failed"
-      );
+      return rejectWithValue(error.response?.data?.message || "Login failed");
     }
-  }
+  },
 );
+
+// ==========================
+// GET CURRENT USER
+// ==========================
 
 export const getCurrentUser = createAsyncThunk(
   "auth/getCurrentUser",
@@ -60,14 +60,13 @@ export const getCurrentUser = createAsyncThunk(
       localStorage.removeItem("token");
 
       return rejectWithValue(
-        error.response?.data?.message || "Session expired"
+        error.response?.data?.message || "Session expired",
       );
     }
-  }
+  },
 );
 
-// ==============
-// ============
+// ==========================
 // INITIAL STATE
 // ==========================
 
@@ -79,9 +78,8 @@ const initialState = {
   success: false,
 };
 
-
 // ==========================
-// SLICE
+// AUTH SLICE
 // ==========================
 
 const authSlice = createSlice({
@@ -90,33 +88,38 @@ const authSlice = createSlice({
   initialState,
 
   reducers: {
-  logout: (state) => {
-    state.user = null;
-    state.token = null;
-    state.success = false;
-    localStorage.removeItem("token");
+    // Logout
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.success = false;
+
+      localStorage.removeItem("token");
+    },
+
+    // Clear messages
+    clearAuthMessages: (state) => {
+      state.error = null;
+      state.success = false;
+    },
+
+    // Update profile image immediately
+    updateProfileImage: (state, action) => {
+      if (state.user) {
+        state.user.profileImage = action.payload;
+      }
+    },
   },
 
-  clearAuthMessages: (state) => {
-    state.error = null;
-    state.success = false;
-  },
-
-  updateProfileImage: (state, action) => {
-    if (state.user) {
-      state.user.profileImage = action.payload;
-    }
-  },
-},
-
-  updateProfileImage: (state, action) => {
-  if (state.user) {
-    state.user.profileImage = action.payload;
-  }
-},
+  // ==========================
+  // ASYNC ACTIONS
+  // ==========================
 
   extraReducers: (builder) => {
+    // --------------------------
     // REGISTER
+    // --------------------------
+
     builder
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
@@ -127,6 +130,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
+        state.error = null;
       })
 
       .addCase(registerUser.rejected, (state, action) => {
@@ -135,8 +139,10 @@ const authSlice = createSlice({
         state.success = false;
       });
 
-
+    // --------------------------
     // LOGIN
+    // --------------------------
+
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -154,8 +160,11 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-      
-   // GET CURRENT USER
+
+    // --------------------------
+    // GET CURRENT USER
+    // --------------------------
+
     builder
       .addCase(getCurrentUser.pending, (state) => {
         state.loading = true;
@@ -166,21 +175,24 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.error = null;
       })
-
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
         state.token = null;
         state.error = action.payload;
       });
-},  
-
+  },
 });
 
-export const {
-  logout,
-  clearAuthMessages,
-  updateProfileImage,
-} = authSlice.actions;
+// ==========================
+// EXPORT ACTIONS
+// ==========================
+
+export const { logout, clearAuthMessages, updateProfileImage } =
+  authSlice.actions;
+
+// ==========================
+// EXPORT REDUCER
+// ==========================
 
 export default authSlice.reducer;

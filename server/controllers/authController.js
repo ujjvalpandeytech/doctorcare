@@ -2,12 +2,16 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+// ==========================
+// REGISTER USER
+// ==========================
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
 
     // Check required fields
-    if (!name || !email || !phone || !password) {
+    if (!name  || email || !phone || !password) {
       return res.status(400).json({
         success: false,
         message: "Please provide name, email, phone and password",
@@ -43,6 +47,7 @@ const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      profileImage: user.profileImage,
     };
 
     res.status(201).json({
@@ -60,6 +65,9 @@ const registerUser = async (req, res) => {
   }
 };
 
+// ==========================
+// LOGIN USER
+// ==========================
 
 const loginUser = async (req, res) => {
   try {
@@ -109,6 +117,7 @@ const loginUser = async (req, res) => {
       }
     );
 
+    // Send user information
     res.status(200).json({
       success: true,
       message: "Login successful",
@@ -118,6 +127,7 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        profileImage: user.profileImage,
       },
     });
   } catch (error) {
@@ -130,12 +140,20 @@ const loginUser = async (req, res) => {
   }
 };
 
+// ==========================
+// GET CURRENT USER
+// ==========================
+
 const getMe = async (req, res) => {
   res.status(200).json({
     success: true,
     user: req.user,
   });
 };
+
+// ==========================
+// EXPORT
+// ==========================
 
 module.exports = {
   registerUser,
